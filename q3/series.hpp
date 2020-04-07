@@ -25,15 +25,32 @@ public:
     /* Non-const because a is non-const. */
     virtual double evaluate_truncated(double x, int n)
     {
-        double prev;
-        double accprev = 0;
-        double acc= a(0);
-        for(int i=1; i<n; i++){
-            accprev = accprev + a(i-1)*x;
-            prev = a(i-1);
-            acc  = acc + a(i)*prev/a(i-1)*x;
+      double prev;
+      if (a(0) != 0) {
+        prev = a(0);
+      } else {
+        prev = 1;
+      }
+      double acc = a(0);
+      double prevcoeff;
+      int prevempty;
+
+      for (int i=1; i<n; i++) {
+        if (a(i) == 0) {
+          prevempty = i;
+          prev = prev*x; //use the previous coefficient but multiply it by x;
+        } else {
+          prevcoeff = a(i-1);
+
+          if (prevcoeff == 0) { //if previous coefficient is 0
+            prevcoeff = a(prevempty-1);
+          }
+
+          prev = prev * a(i)/prevcoeff * x; //increment
+          acc = acc + prev;
         }
-        return acc;
+      }
+      return acc;
     }
 
     //! Evaluate the function at position x, adding more terms until tolerance is met
@@ -42,7 +59,7 @@ public:
     {
         // TODO: Implement
 
-        cerr<<"Exceeded maximum iterations "<<max_n<<" without reaching tolerance "<<tol<<endl;
+        cerr<<"Exceeded maximum iterations "<< max_n<<" without reaching tolerance "<<tol<<endl;
         exit(1);
     }
 
