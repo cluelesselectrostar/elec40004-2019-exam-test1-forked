@@ -25,9 +25,13 @@ public:
     /* Non-const because a is non-const. */
     virtual double evaluate_truncated(double x, int n)
     {
-        double acc=0;
-        for(int i=0; i<n; i++){
-            acc += a(i) * pow(x, i);
+        double prev;
+        double accprev = 0;
+        double acc= a(0);
+        for(int i=1; i<n; i++){
+            accprev = accprev + a(i-1)*x;
+            prev = a(i-1);
+            acc  = acc + a(i)*prev/a(i-1)*x;
         }
         return acc;
     }

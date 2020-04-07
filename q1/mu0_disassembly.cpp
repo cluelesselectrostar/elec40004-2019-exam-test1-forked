@@ -11,7 +11,55 @@ bool mu0_is_instruction(uint16_t v)
 
 string mu0_disassemble_instruction(uint16_t instr)
 {
-    return "ERR";
+    bool op3 = (instr >> 15) & 1;
+    bool op2 = (instr >> 14) & 1;
+    bool op1 = (instr >> 13) & 1;
+    bool op0 = (instr >> 12) & 1;
+    uint16_t opbits{0x0FFF};
+    uint16_t opout = instr & opbits;
+    string operand = " " + to_string(opout);
+
+    if (op3) { //INP, OUT
+        if (op2 || op1) { //invalid
+          return to_string(instr);
+        }
+        if (op0) { //OUT
+          return "OUT";
+        } else { //INP
+          return "INP";
+        }
+    } else { //LDA STA ADD SUB JMP JGE JNE STP
+      if (op2) { //JMP, JGE, JNE, STP
+        if (op1) {//JNE, STP
+          if (op0) { // STP
+            return "STP";
+          } else { // JNE
+            return "JNE" + operand;
+          }
+        } else { // JMP, JGE
+          if (op0) { //JGE
+              return "JGE" + operand;
+          } else { //JMP
+              return "JMP" + operand;
+          }
+        }
+      } else {
+        if (op1) { //ADD, SUB
+          if (op0) { //SUB
+            return "SUB" + operand;
+          } else { //ADD
+            return "ADD" + operand;
+          }
+        } else { //STA, LDA
+          if (op0) { // STA
+            return "STA" + operand;
+          } else { //LDA
+            return "LDA" + operand;
+          }
+        }
+      }
+    }
+
 }
 
 string mu0_opcode_to_opname(uint16_t opcode)
