@@ -40,6 +40,7 @@ bool mu0_is_data(const string &s);
 uint16_t mu0_opname_to_opcode(const string &s);
 
 // TODO: overload for mu0_is_instruction which takes a string
+bool mu0_is_instruction(const string &s);
 
 // Returns true if the given opname has a memory operand
 bool mu0_instruction_has_operand(const string &value);
