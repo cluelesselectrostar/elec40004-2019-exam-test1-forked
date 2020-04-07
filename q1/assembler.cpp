@@ -52,9 +52,12 @@ int main()
 		if(mu0_is_data(inp)){
 			opr=inp;
 		}
-		string tmp = opc + opr;			
-		printer.push_back(tmp);		
+		if(!opc.empty() && !opr.empty()){
+			string tmp = opc + opr;			
+			printer.push_back(tmp);
+		}
 	}
+			
 	for(int i=0; i<printer.size(); i++){
 		cout << printer[i] << endl;
 	}
