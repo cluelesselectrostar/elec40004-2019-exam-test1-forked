@@ -3,10 +3,30 @@
 #include <sstream>
 #include <cassert>
 #include <iostream>
+#include <cmath>
 
 bool mu0_is_instruction(uint16_t v)
 {
     return (v>>12) < 10;
+}
+
+int twoscomplementtosigneddec(uint16_t binary)
+{
+    int pwr = pow(2,15);
+    int acc = 0;
+    int selector = 15;
+
+    for (int i=0; i<16; ++i)
+    {
+        if ( i==0 && ((binary >> selector) & 1) !=0 ) {
+            acc = pwr * -1;
+        } else  {
+            acc += (((binary >> selector) & 1))* pwr;
+        }
+        pwr /= 2;
+        selector = selector -1;
+    }
+    return acc;
 }
 
 string mu0_disassemble_instruction(uint16_t instr)
@@ -21,7 +41,8 @@ string mu0_disassemble_instruction(uint16_t instr)
 
     if (op3) { //INP, OUT
         if (op2 || op1) { //invalid
-          return to_string(instr);
+          int invalid = twoscomplementtosigneddec(instr);
+          return to_string(invalid);
         }
         if (op0) { //OUT
           return "OUT";
