@@ -57,7 +57,15 @@ public:
     /* Non-const because a and evaluate_truncated are non-const. */
     virtual double evaluate_to_tolerance(double x, double tol, int max_n)
     {
-        // TODO: Implement
+        double error;
+        for (int i=1; i<max_n; i++) {
+          error = evaluate_truncated(x,i) - evaluate_truncated(x,i-1);
+          if (error < tol) {
+            return evaluate_truncated(x,i);
+          } else {
+            continue;
+          }
+        }
 
         cerr<<"Exceeded maximum iterations "<< max_n<<" without reaching tolerance "<<tol<<endl;
         exit(1);
