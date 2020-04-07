@@ -5,7 +5,7 @@
 using namespace std;
 
 int main (int argc, char** argv) {
-  SeriesConstant(5);
+  Series *s;
 
   double x = 1; //value of x at which to evaluate the function.
   int max_n = 20;
@@ -18,8 +18,8 @@ int main (int argc, char** argv) {
   }
 
   double prev; //prev is a_n x^n
-  if (b.a(0) != 0) {
-    prev = Series::a(0);
+  if (s->a(0) != 0) {
+    prev = s->a(0);
   } else {
     prev = 1;
   }
@@ -28,20 +28,20 @@ int main (int argc, char** argv) {
 
   for (int i=0 ; i < max_n; i++) {
 
-    if (Series::a(i) == 0) {
+    if (s->a(i) == 0) {
       prevempty = i;
       prev = prev*x; //use the previous coefficient but multiply it by x;
     } else {
-      prevcoeff = Series::a(i-1);
+      prevcoeff = s->a(i-1);
 
       if (prevcoeff == 0) { //if previous coefficient is 0
-        prevcoeff = Series::a(prevempty-1)
+        prevcoeff = s->a(prevempty-1);
       }
 
-      prev = prev * Series::a(i)/prevcoeff * x; //increment
+      prev = prev * s->a(i)/prevcoeff * x; //increment
     }
 
-    cout << i << "," << Series::evaluate_truncated(x,i) << "," << a(i) << "," << prev << endl;
+    cout << i << "," << s->evaluate_truncated(x,i) << "," << s->a(i) << "," << prev << endl;
   }
 
 }
