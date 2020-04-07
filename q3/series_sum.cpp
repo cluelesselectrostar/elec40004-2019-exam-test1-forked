@@ -3,5 +3,5 @@
 
 Series *series_sum(Series *a, Series *b)
 {
-    assert(0);
+    return a->a() + b->a();
 }
