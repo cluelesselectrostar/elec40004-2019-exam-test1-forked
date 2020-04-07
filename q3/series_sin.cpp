@@ -28,5 +28,5 @@ Series *series_sin(Series *s)
 {
     assert(s->is_variable());
     assert(0);
-    return new SeriesSin()
+    return new SeriesSin(s);
 }
