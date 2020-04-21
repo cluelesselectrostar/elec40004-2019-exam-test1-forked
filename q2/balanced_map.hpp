@@ -46,6 +46,7 @@ private:
             }
         }
         return tree; */
+	//
 
 	if(tree==nullptr){
 	    res = new Node{key, Value(), new_weight(), nullptr, nullptr};
