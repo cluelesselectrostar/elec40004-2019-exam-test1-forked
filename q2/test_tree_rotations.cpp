@@ -16,6 +16,7 @@ struct Node
 
 int main () {
 
+  //Initalised nodes.
   Node *n1 = new Node;
   Node *n2 = new Node;
   Node *n3 = new Node;
@@ -30,7 +31,7 @@ int main () {
   n4->right = n5;
   cerr << "defined tree" << endl;
 
-  cerr << "rotate right" << endl;
+  cerr << "now rotate right" << endl;
   tree_rotate_right(n4);
   //cerr << (n2->left == n1) << (n2->right == n4) << (n4->left == n3) << (n4->right == n5) << endl;
   if ((n2->left == n1) && (n2->right == n4) && (n4->left == n3) && (n4->right == n5)) {
@@ -40,7 +41,7 @@ int main () {
     exit(1);
   }
 
-  cerr << "rotate left" << endl;
+  cerr << "now rotate left" << endl;
   tree_rotate_left(n2);
   //cerr << (n2->left == n1) << (n2->right == n3) << (n4->left == n2) << (n4->right == n5) << endl;
   if ((n2->left == n1) && (n2->right == n3) && (n4->left == n2) && (n4->right == n5)) {
