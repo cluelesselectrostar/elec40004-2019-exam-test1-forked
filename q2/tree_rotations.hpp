@@ -6,15 +6,19 @@
 template<class Node>
 Node *tree_rotate_right(Node *N4)
 {
-    // TODO
-    return N4;
+    Node *newparent = N4->left;
+    N4->left = (N4->left)->right;
+    newparent->right = N4;
+    return newparent;
 }
 
 template<class Node>
 Node *tree_rotate_left(Node *N2)
 {
-    // TODO
-    return N2;
+  Node *newparent = N2->right;
+  N2->right = (N2->right)->left;
+  newparent->left = N2;
+  return newparent;
 }
 
 #endif
