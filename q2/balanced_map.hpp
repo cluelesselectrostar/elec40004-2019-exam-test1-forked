@@ -17,6 +17,7 @@ public:
     {
         Key key;
         Value value;
+	uint32_t weight
         Node *left;
         Node *right;
     };
@@ -31,7 +32,7 @@ private:
 
     Node *insert(Node *tree, const Key &key, Node *&res)
     {
-        if(tree==nullptr){
+        /* if(tree==nullptr){
             res=new Node{key, Value(), nullptr, nullptr};
             tree=res;
         }else{
@@ -44,7 +45,29 @@ private:
                 res=tree;
             }
         }
-        return tree;
+        return tree; */
+
+	if(tree==nullptr){
+	    res = new Node{key, Value(), new_weight(), nullptr, nullptr};
+	    tree = res;
+	}else{
+	    if(key < tree->key){
+		tree->left = insert(tree->left, key, res);
+		
+		//ensure weight relationship
+		if(tree->left->weight > tree->weight){
+		    tree = tree_rotate_right(tree);
+		}
+	    }else if(key > tree->key){
+		tree->right = insert(tree->right, key, res);
+
+		//ensure weight relationship
+		if(tree->right->weight > tree->weight){
+		    tree = tree_rotate_left(tree);
+	    	}
+	    }
+	}
+	return tree;
     }
 
     Node *m_root;

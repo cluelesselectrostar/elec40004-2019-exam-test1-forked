@@ -40,7 +40,7 @@ private:
     }
 
     Node *m_root;
-public:
+public:   
     UnBalancedMap()
         : m_root(nullptr)
     {}
@@ -57,6 +57,21 @@ public:
     // for debugging too
     const Node *get_root() const
     { return m_root; }
+
+
+    ~UnBalancedMap() {
+	tree_delete(this.Node);
+    }
+
+    UnBalancedMap (const UnBalancedMap& other) 
+    {
+	this.Node.key = other->Node->key;
+	this.Node.value = other->Node->value;
+	this.Node.left = &UnBalancedMap(other->Node->left);
+	this.Node.right = &UnBalancedMap(other->Node->right);
+    }
+
+    UnBalancedMap operator=(const UnBalancedMap& other) const = delete;
 };
 
 #endif
