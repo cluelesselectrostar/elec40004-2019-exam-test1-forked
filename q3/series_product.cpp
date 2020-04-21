@@ -3,5 +3,6 @@
 
 Series *series_product(Series *a, Series *b)
 {
-    assert(0);
+    double c = a->a(0) * b->b(0);
+    for(int i=0; i<
 }
