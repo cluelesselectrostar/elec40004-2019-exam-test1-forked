@@ -1,5 +1,7 @@
 #include "stl_map.hpp"
 #include "naive_map.hpp"
+#include "unbalanced_map.hpp"
+#include "balanced_map.hpp"
 
 
 #include <chrono>
@@ -39,4 +41,6 @@ int main()
 
     test_map_performance<STLMap<unsigned,unsigned>>("STLMap");
     test_map_performance<NaiveMap<unsigned,unsigned>>("NaiveMap");
+    test_map_performance<UnBalancedMap<unsigned,unsigned>>("UnBalancedMap");
+test_map_performance<BalancedMap<unsigned,unsigned>>("BalancedMap");
 }
