@@ -3,7 +3,7 @@
 
 using namespace std;
 
-string dec_to_hex(
+string dec_to_hex()
 
 int main()
 {

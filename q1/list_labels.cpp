@@ -7,6 +7,22 @@ using namespace std;
 
 int main()
 {
+
+	/*
+	
+	I somehow think we interpreted this incorrectly.
+	What if the label comes before the instruction?
+
+	LDA TEN
+	Z: OUT //what about this?
+	ADD NEG_ONE
+	JNE Z
+	Y: STP
+	TEN: 10
+	NEG_ONE: -1
+
+	*/
+
 	string s;
 	vector<string> printer;
 	while(1){
