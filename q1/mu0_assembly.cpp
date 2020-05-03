@@ -16,7 +16,7 @@ bool mu0_is_label_decl(const string &s)
         return false;
     }
 
-    for(int i=1; i<=s.length()-2; i++){
+    for(int i=1; i<=s.size()-2; i++){
         if(!(isalnum(s[i]) || s[i]=='_')){
             return false;
         }
@@ -78,7 +78,7 @@ bool mu0_is_instruction(const string &s)
 	if (s.empty()) {
         return false;
     }
-    
+
 	return (s=="LDA" || s=="STA" || s=="ADD" || s=="SUB" || s=="JMP" || s=="JGE" || s=="JNE" || s=="STP" || s=="INP" || s=="OUT");
 }
 

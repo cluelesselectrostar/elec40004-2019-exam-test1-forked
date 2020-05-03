@@ -3,7 +3,7 @@
 
 using namespace std;
 
-string dec_to_hex()
+//string dec_to_hex()
 
 int main()
 {
@@ -11,11 +11,13 @@ int main()
 	string opc;
 	string opr;
 	vector<string> printer;
+
 	while(1){
 		cin >> inp;
 		if(cin.fail()){
 			break;
 		}
+
 		if(mu0_is_instruction(inp)){
 			if(inp=="LDA"){
 				opc="0";
@@ -51,9 +53,11 @@ int main()
 				opr="000";
 			}
 		}
+
 		if(mu0_is_data(inp)){
-			opr=inp;
+			opr = inp;
 		}
+
 		if(!opc.empty() && !opr.empty()){
 			string tmp = opc + opr;			
 			printer.push_back(tmp);
