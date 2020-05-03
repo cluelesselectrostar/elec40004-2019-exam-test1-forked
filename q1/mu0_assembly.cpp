@@ -75,7 +75,10 @@ bool mu0_is_instruction(const string &s)
 {
     // whether the string is LDA, STA, ADD, SUB, JMP, JGE, JNE, 
     // STP, INP or OUT
-	assert(!s.empty());
+	if (s.empty()) {
+        return false;
+    }
+    
 	return (s=="LDA" || s=="STA" || s=="ADD" || s=="SUB" || s=="JMP" || s=="JGE" || s=="JNE" || s=="STP" || s=="INP" || s=="OUT");
 }
 
