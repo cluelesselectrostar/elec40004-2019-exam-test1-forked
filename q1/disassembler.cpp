@@ -7,10 +7,13 @@ using namespace std;
 int main () {
 
   uint16_t instr;
+  string instruction;
 
+  while (cin) {
     cin >> hex >> instr;
-    string instruction = mu0_disassemble_instruction(instr);
+    instruction = mu0_disassemble_instruction(instr);
     cout << instruction << endl;
-
+  }
+    
 
 }

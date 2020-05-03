@@ -10,39 +10,20 @@ bool mu0_is_instruction(uint16_t v)
     return (v>>12) < 10;
 }
 
-int twoscomplementtosigneddec(uint16_t binary)
-{
-    int pwr = pow(2,15);
-    int acc = 0;
-    int selector = 15;
-
-    for (int i=0; i<16; ++i)
-    {
-        if ( i==0 && ((binary >> selector) & 1) !=0 ) {
-            acc = pwr * -1;
-        } else  {
-            acc += (((binary >> selector) & 1))* pwr;
-        }
-        pwr /= 2;
-        selector = selector -1;
-    }
-    return acc;
-}
-
 string mu0_disassemble_instruction(uint16_t instr)
 {
     bool op3 = (instr >> 15) & 1;
     bool op2 = (instr >> 14) & 1;
     bool op1 = (instr >> 13) & 1;
     bool op0 = (instr >> 12) & 1;
-    uint16_t opbits{0x0FFF};
+    uint16_t opbits{0x0FFF}; //operand is lower 12 bits.
     uint16_t opout = instr & opbits;
     string operand = " " + to_string(opout);
 
     if (op3) { //INP, OUT
         if (op2 || op1) { //invalid
-          int invalid = twoscomplementtosigneddec(instr);
-          return to_string(invalid);
+          //int invalid = twoscomplementtosigneddec(instr);
+          //return to_string(invalid);
         }
         if (op0) { //OUT
           return "OUT";
@@ -102,10 +83,15 @@ vector<uint16_t> mu0_read_binary(std::istream &src)
 {
     vector<uint16_t> memory;
 
-    int num=1;
+    int num = 1;
     string line;
+
     while( getline(src, line) ){
         assert(num <= 4096);
+
+        if (line.empty()) {
+          break;
+        }
 
         // Trim initial space
         while(line.size()>0 && isspace(line.front())){
@@ -134,7 +120,7 @@ vector<uint16_t> mu0_read_binary(std::istream &src)
 
         num++;
     }
-    memory.resize(4096, 0);
+    memory.resize(num, 0);
 
     return memory;
 }

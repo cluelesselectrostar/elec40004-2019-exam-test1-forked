@@ -103,26 +103,26 @@ int main()
 
 		current.address = i;
 
-		if(mu0_is_label_decl(inp)) { // case 1: label + content
+		if(mu0_is_label_decl(inp)) { // CASE 1: label + content
 
-			inp.pop_back();
+			inp.pop_back(); //remove colon from label.
 			current.label = inp;
-			cin >> inp;
+			cin >> inp; //moving on to content.
 
 			if(mu0_is_data(inp)) {
-				current.content = signed_dec_to_hex(stoi(inp),4);
+				current.content = signed_dec_to_hex(stoi(inp),4); //content has to be 4 digits max
 			} else { //is instruction
 				opcode = op_convert(inp);
 
 				if (opcode == "7" || opcode == "8" || opcode == "9") { //no operand for STP, INP, OUT;
-					current.content = opcode + "000";
+					current.content = opcode + "000"; //concatenate with trailing zeroes.
 				} else {
-					cin >> inp;
+					cin >> inp; //moving on to operand
 
-					if(mu0_is_data(inp)){
-						operand = signed_dec_to_hex(stoi(inp),3);
+					if(mu0_is_data(inp)){ //operand
+						operand = signed_dec_to_hex(stoi(inp),3); //operand has to be 3 digits only
 						current.content = opcode + operand;
-					} else {
+					} else { //label
 						current.content = opcode + inp; //content is now operand + label	
 					}	
 				}
@@ -130,7 +130,7 @@ int main()
 			
 			label_map.insert({current.label, current.address});
 
-		} else if(mu0_is_instruction(inp)){ //case 2: opcode + (and) label/data
+		} else if(mu0_is_instruction(inp)){ //CASE 2: opcode + (and) label/data
 
 			opcode = op_convert(inp);
 
@@ -140,7 +140,7 @@ int main()
 				cin >> inp;
 
 				if(mu0_is_data(inp)){
-					operand = signed_dec_to_hex(stoi(inp),3);
+					operand = signed_dec_to_hex(stoi(inp),3); //operand has to be 3 digits only.
 					current.content = opcode + operand;
 				} else {
 					current.content = opcode + inp; //content is now operand + label	
@@ -151,6 +151,7 @@ int main()
 			exit(1);
 		}
 
+		//push back entry into vector, clear instruction, and increment address for next instruction.
 		prog.push_back(current);
 		current.clear();
 		i+=1;
@@ -171,9 +172,9 @@ int main()
 		out_opc = out[0];
 
 		//skip the following if statement, if it is a normal instruction (opcode + operand)
-		if (is_label.size() != 0) { //if it is a label, print out content directly (but make sure 4 digits)
+		if (is_label.size() != 0) { //if it is a label, print out content directly 
 
-			while (out.size()>4) {
+			while (out.size()>4) { //(but make sure 4 digits)
 				out.erase(0,1);
 			}
 
@@ -185,14 +186,14 @@ int main()
 				if (label_map.find(tag) == label_map.end()) {
 					//label does not exist, assume it has to exist.
 				} else {
-					tag_match = label_map.find(tag)->second;
-					tag_match_trans = to_string(tag_match);
-					while (tag_match_trans.size()<3) {
+					tag_match = label_map.find(tag)->second; //match with address
+					tag_match_trans = to_string(tag_match); //translate integer address to string
+					while (tag_match_trans.size()<3) { //concatenate address with additional zeroes in front
 						tag_match_trans = "0" + tag_match_trans;
 					}
 				}
 				
-				out = out_opc + tag_match_trans;
+				out = out_opc + tag_match_trans; //now its opcode + address (which is the operand)
 			}
 		}
 
