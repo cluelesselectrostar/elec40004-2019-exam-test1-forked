@@ -25,15 +25,19 @@ public:
     /* Non-const because a is non-const. */
     virtual double evaluate_truncated(double x, int n)
     {
-      double prev;
+      double prev; //previous value (used for powers of 2)
       if (a(0) != 0) {
         prev = a(0);
       } else {
         prev = 1;
       }
+
       double acc = a(0);
       double prevcoeff;
-      int prevempty;
+      int prevempty; //index where coefficient is 0
+
+      //prev contains the entire previous term (coefficient and power of x), prevcoeff contains only coefficient.
+      //eliminates the need to do powers.
 
       for (int i=1; i<n; i++) {
         if (a(i) == 0) {
@@ -46,7 +50,7 @@ public:
             prevcoeff = a(prevempty-1);
           }
 
-          prev = prev * a(i)/prevcoeff * x; //increment
+          prev = prev * a(i)/prevcoeff * x; //increment: multiply by previous and devide by previous coefficient.
           acc = acc + prev;
         }
       }
@@ -58,6 +62,7 @@ public:
     virtual double evaluate_to_tolerance(double x, double tol, int max_n)
     {
         double error;
+
         for (int i=1; i<max_n; i++) {
           error = evaluate_truncated(x,i) - evaluate_truncated(x,i-1);
           if (error < tol) {

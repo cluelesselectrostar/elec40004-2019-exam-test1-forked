@@ -3,6 +3,13 @@
 
 #include "series.hpp"
 
+float factorial(int n){
+    if (n==0)
+        return 1;
+    else
+        return 2*n*factorial(n-1);
+}
+
 /* Operations which return a new transformed series will take
    ownership of the base series - the caller should delete
    the returned object instead.

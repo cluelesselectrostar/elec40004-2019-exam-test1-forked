@@ -120,7 +120,7 @@ vector<uint16_t> mu0_read_binary(std::istream &src)
 
         num++;
     }
-    memory.resize(num, 0);
+    memory.resize(num-1, 0);
 
     return memory;
 }

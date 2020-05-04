@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -157,12 +158,6 @@ int main()
 		i+=1;
 	}
 
-	//print map to cerr 
-	for (auto it = label_map.cbegin(); it != label_map.cend(); ++it) {
-		cerr << it->first << " " << it->second << endl;
-	}
-
-
 	//////////////////// OUTPUT STAGE ////////////////////
 
 	//now print and match maps.
@@ -196,6 +191,8 @@ int main()
 				out = out_opc + tag_match_trans; //now its opcode + address (which is the operand)
 			}
 		}
+	
+    	transform(out.begin(), out.end(), out.begin(), ::toupper);
 
 		cout << out << endl;
 	}

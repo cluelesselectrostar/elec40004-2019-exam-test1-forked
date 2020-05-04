@@ -13,9 +13,9 @@ public:
 
     virtual double a(int p) override
     {
-        if(p==0){
+        if(p==0){ //return constant for zeroth term
             return m_c;
-        }else{
+        }else{ //return zero for variable terms
             return 0.0;
         }
     }

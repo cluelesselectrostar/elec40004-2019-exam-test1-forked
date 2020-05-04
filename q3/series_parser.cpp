@@ -1,3 +1,4 @@
+#include "series.hpp"
 #include "series_operations.hpp"
 
 #include <list>

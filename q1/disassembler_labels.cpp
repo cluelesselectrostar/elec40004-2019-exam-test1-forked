@@ -67,7 +67,7 @@ int main () {
       out_map.insert({i,"STP"});
     }
 
-    if (!past_stop) {
+    if (!past_stop) { //not past stop: opcode + operand (which has to be translated to a label)
       assem = mu0_disassemble_instruction(memory[i]);
       while (assem.size()>3) {
         assem.pop_back();
